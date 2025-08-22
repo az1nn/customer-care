@@ -1,0 +1,22 @@
+.alertContainer {
+  position: fixed;
+  top: -100px; /* Inicialmente fora da tela */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: top 0.5s ease-in-out;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.show {
+  top: 20px; /* Desce até esta posição quando visível */
+  opacity: 1;
+  visibility: visible;
+}
+
+.hide {
+  top: -100px; /* Volta para a posição inicial quando escondido */
+  opacity: 0;
+  transition: top 0.5s ease-in-out, opacity 0.3s ease-in-out;
+}

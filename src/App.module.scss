@@ -1,0 +1,11 @@
+.App {
+  display: flex;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-width: calc(100vw - 280px);
+  width: calc(100vw - 75px);
+  height: 100vh;
+}
