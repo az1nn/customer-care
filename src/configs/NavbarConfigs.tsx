@@ -6,7 +6,7 @@ export const navbarConfig: NavbarMenuProps[] = [
     url: "/chamados",
   },
   {
-    page: "Serviços",
-    url: "/servicos",
+    page: "Financeiro",
+    url: "/financeiro",
   },
 ];

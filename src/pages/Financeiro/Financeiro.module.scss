@@ -1,47 +1,97 @@
-.main-page {
+.main_page {
   display: flex;
-  flex-direction: column;
-  background-color: var(--color-neutral-light);
-  padding: 0 var(--spacing-stack-md);
-
-  &__page {
-    border-radius: 16px;
-    background-color: var(--color-neutral-lightest);
-    padding: var(--spacing-inset-sm);
-  }
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: var(--color--bg--light);
+  height: max-content;
+  width: 100%;
+  font-family: var(--font-family-base);
+  padding-bottom: 20px;
 }
 
-.input-container {
-  padding: 14px 0;
+.title_container {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: var(--spacing-stack-md);
-}
-
-.first-line {
-  display: grid;
-  grid-template-columns: 32.5% auto 1fr;
-  gap: var(--spacing-stack-sm);
-  width: 100%;
-}
-
-.second-line {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-stack-sm);
-  width: 100%;
-}
-
-.cadastrar {
-  display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
   align-items: center;
-  gap: 16px;
+  justify-content: space-between;
+  padding: var(--spacing-inset-md);
+  width: 100%;
 }
 
-.radio-container {
+.date_filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--color-neutral-lightest);
+  gap: 8px;
+  opacity: 1;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--sidebar-cont-stroke, #dbdbdb);
+  cursor: pointer;
+}
+
+.card_container {
+  border: solid 1px #dbdbdb;
+  box-shadow: 0px 5px 20px 0px #0000000d;
+  border-radius: var(--border-radius-sm);
+  padding: 0 var(--spacing-inline-lg);
+  background-color: var(--color-neutral-lightest);
+}
+
+.line_chart {
+  width: 100%;
+  min-height: 500px;
+  margin: 0 var(--spacing-inset-md);
+  display: flex;
+  justify-content: center;
+  padding-right: 80px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.doug_chart {
+  width: 30%;
+  min-height: 300px;
+  margin: 20px var(--spacing-inset-md);
+  margin-right: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordion {
+  width: 62%;
+  min-height: 300px;
+  margin: 20px var(--spacing-inset-md);
+  margin-left: 0;
+  padding: var(--spacing-inset-md);
+}
+
+.doug_chart_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.doug_chart_title {
+  color: #666;
+  font-weight: 500;
+  font-size: 0.6rem;
+  margin-bottom: 4px;
+}
+
+.doug_chart_value {
+  color: #222;
+  font-weight: bold;
+  font-size: 0.9rem;
 }

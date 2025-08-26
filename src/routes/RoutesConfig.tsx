@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { APP_ROUTES_CONSTANTS } from "../constants/AppRoutesConstants";
 import { IAppRoute } from "../models/IAppRoute";
 import Chamados from "../pages/Chamados/Chamados";
-import Servicos from "@/pages/Financeiro/Financeiro";
+import Financeiro from "@/pages/Financeiro/Financeiro";
 
 export const RoutesConfig = [
   {
@@ -16,8 +16,8 @@ export const RoutesConfig = [
     label: "Cadastrar",
   },
   {
-    path: APP_ROUTES_CONSTANTS.SERVICOS,
-    element: <Servicos />,
+    path: APP_ROUTES_CONSTANTS.Financeiro,
+    element: <Financeiro />,
     label: "Financeiro",
   },
   {

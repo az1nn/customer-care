@@ -1,6 +1,6 @@
 export const APP_ROUTES_CONSTANTS = {
   ROOT: "/",
   CHAMADOS: "chamados",
-  SERVICOS: "servicos",
+  Financeiro: "financeiro",
   UNAUTHORIZED: "unauthorized",
 } as const;
