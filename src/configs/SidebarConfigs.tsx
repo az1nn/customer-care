@@ -15,8 +15,8 @@ export const SidebarConfigs: SidebarMenuProps[] = [
     ),
   },
   {
-    url: "servicos",
-    page: "Serviços",
+    url: "financeiro",
+    page: "Financeiro",
     hasPage: true,
     icon: (
       <span

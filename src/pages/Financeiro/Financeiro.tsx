@@ -1,124 +1,213 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { useAlert } from "light-portal-components";
-import { API_ENDPOINTS } from "../../constants/ApiEndpointsConstants.ts";
-import defaultInstance from "../../helpers/axios-instance.ts";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigation } from "../../hooks/use-navigation.ts";
-import { IFormData } from "../../models/IFormData.ts";
-import { IGetResponse, IPutResponse } from "../../models/IResponse.ts";
 import styles from "./Financeiro.module.scss";
-
+import { Accordion, Subtitle, Text } from "mondrian-react";
 import {
-  IAxiosWithPermissionProps,
-  useAxiosWithPermission,
-  useAxios,
-} from "light-portal-components";
-import { Method } from "axios";
+  ArcElement,
+  CategoryScale,
+  ChartData,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
+} from "chart.js";
+import { Chart } from "react-chartjs-2";
+import {
+  verticalLinePlugin,
+  xAxisHoverPlugin,
+} from "./components/CustomTooltip.ts";
+import {
+  lineChartOptions,
+  doughnutChartOptions,
+  chartLabels,
+} from "./chartConfig";
+import classNames from "../../utils/classnames.ts";
 
-const Servicos: React.FC = () => {
-  const { navigateToList } = useNavigation();
-  const { showSuccessAlert, showErrorAlert } = useAlert();
-
-  const [formData, setFormData] = useState<IFormData>({
-    text_field_1: "",
-    text_field_2: "",
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  ArcElement,
+  Legend,
+  Tooltip,
+  verticalLinePlugin,
+  xAxisHoverPlugin
+);
+const Financeiro: React.FC = () => {
+  const chartRef = useRef<ChartJS<"line">>(null);
+  const dougChartRef = useRef<ChartJS<"doughnut">>(null);
+  const [chartData, setChartData] = useState<ChartData<"line">>({
+    datasets: [],
+  });
+  const [dougChartData, setDougChartData] = useState<ChartData<"doughnut">>({
+    datasets: [],
   });
 
-  const clearFormData = () => {
-    setFormData({
-      text_field_1: "",
-      text_field_2: "",
-    });
-  };
-
-  const configRequestGet: IAxiosWithPermissionProps = useMemo(
-    () => ({
-      axiosInstance: defaultInstance,
-      method: "get",
-      url: API_ENDPOINTS.EXAMPLE,
-      permissionCheck: {
-        permissionType: "edit",
-        project: "template_front",
-      },
-      mock: true,
-    }),
-    []
-  );
-
-  const {
-    dataResponse: dataResponseGet,
-    isLoading: isLoadingGet,
-    fetchData: fetchDataGet,
-    // hasScreenPermission,
-  } = useAxiosWithPermission<IGetResponse>(configRequestGet);
+  const accordionData = [
+    { color: "#333333", label: "Cloud", value: 3500 },
+    { color: "#FF8C00", label: "Infra", value: 2800 },
+    { color: "#003399", label: "SOC", value: 1900 },
+    { color: "#FFD700", label: "Segurança", value: 1200 },
+    { color: "#A020F0", label: "IOT", value: 800 },
+  ];
 
   useEffect(() => {
-    // if (hasScreenPermission) {
-    if (true) {
-      fetchDataGet();
-    }
+    const chart = chartRef.current;
+    const dougChart = dougChartRef.current;
+    if (!chart || !dougChart) return;
+
+    const lineChartData = {
+      labels: chartLabels,
+      datasets: [
+        {
+          label: "Dataset 1",
+          data: [
+            10000, 20000, 30000, 25000, 40000, 20000, 50000, 30000, 40000,
+            20000, 35000, 50000,
+          ],
+          borderColor: "#DA291C",
+          tension: 0.4,
+          pointBackgroundColor: "#fff",
+          pointHoverBackgroundColor: "#DA291C",
+          pointRadius: 5,
+          pointHoverRadius: 7,
+        },
+      ],
+    };
+
+    const dougData = {
+      labels: ["Cloud", "Infra", "SOC", "Segurança", "IOT"],
+      datasets: [
+        {
+          label: "Dataset 1",
+          data: [12, 19, 3, 5, 2],
+          backgroundColor: [
+            "#333333",
+            "#FF8C00",
+            "#003399",
+            "#FFD700",
+            "#A020F0",
+          ],
+        },
+      ],
+    };
+
+    setChartData(lineChartData);
+    setDougChartData(dougData);
   }, []);
 
-  useEffect(() => {
-    if (dataResponseGet?.data) {
-      setFormData({
-        text_field_1: "",
-        text_field_2: "",
-      });
-    }
-  }, [dataResponseGet]);
-
-  const configRequestPut = useMemo(
-    () => ({
-      axiosInstance: defaultInstance,
-      method: "put" as Method,
-      url: API_ENDPOINTS.EXAMPLE,
-      mock: true,
-      data: formData,
-    }),
-    [formData]
-  );
-
-  const {
-    dataResponse: dataResponsePut,
-    isLoading: isLoadingPut,
-    fetchData: fetchDataPut,
-  } = useAxios<IPutResponse>(configRequestPut);
-
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      try {
-        await fetchDataPut();
-      } catch (error) {
-        console.error("Erro ao enviar dados:", error);
-        showErrorAlert("Erro ao processar a requisição");
-      }
-    },
-    [fetchDataPut, formData]
-  );
-
-  useEffect(() => {
-    if (dataResponsePut?.statusCode === 200) {
-      showSuccessAlert("Dados atualizados com sucesso!");
-      const timer = setTimeout(() => {
-        navigateToList();
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-
-    if (dataResponsePut?.statusCode && dataResponsePut?.statusCode !== 200) {
-      showErrorAlert(dataResponsePut?.message || "Erro ao atualizar dados");
-    }
-  }, [dataResponsePut]);
-
   return (
-    <main className={styles["main-page"]}>
-      servicos page
+    <main className={styles.main_page}>
+      <div className={styles.title_container}>
+        <Subtitle xs>Acompanhamento de faturas</Subtitle>
+        <button className={styles.date_filter}>
+          <span
+            className="mdn-Icon-calendario mdn-Icon--md"
+            aria-label="calendario"
+          ></span>
+          <Text body md>
+            Filtrar por Data
+          </Text>
+        </button>
+      </div>
+
+      <div className={classNames(styles.card_container, styles.line_chart)}>
+        <Chart
+          ref={chartRef}
+          type="line"
+          data={chartData}
+          options={lineChartOptions}
+        />
+      </div>
+
+      <div
+        className={classNames(styles.card_container, styles.doug_chart)}
+        style={{ position: "relative" }}
+      >
+        <Chart
+          ref={dougChartRef}
+          type="doughnut"
+          data={dougChartData}
+          options={doughnutChartOptions}
+        />
+        <div className={styles.doug_chart_overlay}>
+          <div className={styles.doug_chart_title}>TOTAL DAS FATURAS</div>
+          <div className={styles.doug_chart_value}>R$ 10.200,00</div>
+        </div>
+      </div>
+
+      <div className={classNames(styles.card_container, styles.accordion)}>
+        <Accordion
+          data={accordionData.map((item) => {
+            return {
+              content: `
+                  Detalhes sobre ${item.label}: informações relevantes sobre esta
+                  categoria de serviço.`,
+              title: (
+                <span
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    minWidth: "500px"
+                  }}
+                >
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      minWidth: "20%",
+                      marginRight: "20%",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: "16px",
+                        height: "16px",
+                        borderRadius: "50%",
+                        backgroundColor: item.color,
+                      }}
+                    />
+                    <span>{item.label}</span>
+                  </span>
+
+                  <span
+                    style={{
+                      backgroundColor: "#F2F2F2",
+                      borderRadius: "6px",
+                      padding: "2px 8px",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      width: "30%",
+                    }}
+                  >
+                    Vencimento: 20/08
+                  </span>
+
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "bold",
+                      width: "20%",
+                      marginLeft: "20%",
+                    }}
+                  >
+                    R$ {item.value.toLocaleString("pt-BR")}
+                  </span>
+                </span>
+              ),
+            };
+          })}
+        />
+      </div>
     </main>
   );
 };
 
-export default Servicos;
+export default Financeiro;
