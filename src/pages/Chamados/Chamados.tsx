@@ -1,90 +1,101 @@
 import { Button } from "light-portal-components";
-import React, { useState, useCallback, useEffect } from "react";
-import { API_ENDPOINTS } from "@/constants/ApiEndpointsConstants.ts";
-import defaultInstance from "@/helpers/axios-instance.ts";
-import {
-  IAxiosWithPermissionProps,
-  useAlert,
-  useAxiosWithPermission,
-} from "light-portal-components";
-import { useNavigation } from "@/hooks/use-navigation.ts";
-import { IFormData } from "@/models/IFormData";
-import AppForm from "@/pages/components/Form/Form.tsx";
+import React from "react";
 import styles from "./Chamados.module.scss";
-import { IPutResponse } from "@/models/IResponse";
+import Carousel, { TicketData } from "@/pages/Chamados/components/Carousel";
 
 const Chamados: React.FC = () => {
-  const [formData, setFormData] = useState<IFormData>({
-    text_field_1: "",
-    text_field_2: "",
-  });
+  // Dados de exemplo para os tickets do carousel (baseados na imagem)
+  const ticketsData: TicketData[] = [
+    {
+      id: '5283164',
+      title: 'Internet Indisponível',
+      status: ['waiting', 'in-progress'],
+      lastUpdate: '26/fev - 12:42'
+    },
+    {
+      id: '5283164',
+      title: 'Instabilidade na rede',
+      status: ['in-progress'],
+      lastUpdate: '26/fev - 12:42'
+    },
+    {
+      id: '5283164',
+      title: 'Erro de fatura',
+      status: ['delayed'],
+      lastUpdate: '26/fev - 12:42'
+    },
+    {
+      id: '5283165',
+      title: 'Configuração de equipamento',
+      status: ['pending-client'],
+      lastUpdate: '26/fev - 11:30'
+    },
+    {
+      id: '5283166',
+      title: 'Falha crítica no sistema',
+      status: ['critical'],
+      lastUpdate: '26/fev - 10:15'
+    },
+    {
+      id: '5283167',
+      title: 'Solicitação de upgrade',
+      status: ['in-progress'],
+      lastUpdate: '25/fev - 16:20'
+    },
+    {
+      id: '5283168',
+      title: 'Manutenção preventiva',
+      status: ['waiting'],
+      lastUpdate: '25/fev - 14:30'
+    },
+    {
+      id: '5283169',
+      title: 'Mudança de endereço',
+      status: ['pending-client'],
+      lastUpdate: '24/fev - 09:15'
+    }
+  ];
 
-  const [shouldNavigate, setShouldNavigate] = useState(false);
-  const { navigateToList } = useNavigation();
-  const { showSuccessAlert, showErrorAlert } = useAlert();
-
-  const configRequest: IAxiosWithPermissionProps = {
-    axiosInstance: defaultInstance,
-    method: "post",
-    data: formData,
-    url: API_ENDPOINTS.EXAMPLE,
-    // permissionCheck: {
-    //   /* Essa permissão deve ser o mesmo que virá do BFF /permissions/{userId} */
-    //   permissionType: "see",
-    //   /* Esse projeto deve ser o mesmo que virá do BFF /permissions/{userId} */
-    //   project: "template_front",
-    // },
-    mock: true,
+  const handleNewTicket = () => {
+    console.log('Abrir novo chamado');
+    // Aqui seria implementada a navegação para a página de criação de chamados
   };
 
-  const { dataResponse, isLoading, fetchData, isError } =
-    useAxiosWithPermission<IPutResponse>(configRequest);
+  const handleViewAllTickets = () => {
+    console.log('Ver todos os chamados');
+    // Aqui seria implementada a navegação para a lista completa de chamados
+  };
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-
-      try {
-        /* O POST é feito aqui porém o castle mock não permitirá */
-        await fetchData();
-      } catch (error) {
-        console.error("Erro ao enviar dados:", error);
-        showErrorAlert("Erro ao processar a requisição");
-      }
-    },
-    [formData, fetchData]
+  return (
+    <main className={styles["main-page"]}>
+      
+      
+      <section className={styles["carousel-section"]}>
+        <Carousel 
+          tickets={ticketsData}
+          spaceBetween={24}
+        />
+      </section>
+      
+      <section className={styles["actions-section"]}>
+        <Button 
+          variant="primary"
+          permissionId="create-ticket"
+          onClick={handleNewTicket}
+        >
+          Abrir Novo Chamado
+        </Button>
+        
+        <Button 
+          variant="outline"
+          permissionId="view-all-tickets"
+          onClick={handleViewAllTickets}
+        >
+          Ver Todos os Chamados
+        </Button>
+      </section>
+    </main>
   );
-
-  useEffect(() => {
-    if (isError) {
-      showErrorAlert("Erro ao processar a requisição", 5000);
-    }
-  }, [isError]);
-
-  useEffect(() => {
-    if (dataResponse) {
-      console.log("dataResponse", dataResponse);
-      if (dataResponse.statusCode === 201) {
-        showSuccessAlert("Dados enviados com sucesso!");
-        setShouldNavigate(true);
-      } else if (dataResponse.statusCode !== 201) {
-        console.log("dataResponse", dataResponse);
-        showErrorAlert(dataResponse.message || "Erro ao enviar dados");
-      }
-    }
-  }, [dataResponse, showSuccessAlert, showErrorAlert]);
-
-  useEffect(() => {
-    if (shouldNavigate) {
-      const timer = setTimeout(() => {
-        navigateToList();
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [shouldNavigate, navigateToList]);
-
-  return <main className={styles["main-page"]}>chamados</main>;
 };
 
 export default Chamados;
