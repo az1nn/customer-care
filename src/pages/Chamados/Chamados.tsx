@@ -4,6 +4,7 @@ import styles from "./Chamados.module.scss";
 import Carousel, { TicketData } from "@/pages/Chamados/components/Carousel";
 
 const Chamados: React.FC = () => {
+
   // Dados de exemplo para os tickets do carousel (baseados na imagem)
   const ticketsData: TicketData[] = [
     {
@@ -68,25 +69,25 @@ const Chamados: React.FC = () => {
 
   return (
     <main className={styles["main-page"]}>
-      
-      
+
+
       <section className={styles["carousel-section"]}>
-        <Carousel 
+        <Carousel
           tickets={ticketsData}
           spaceBetween={24}
         />
       </section>
-      
+
       <section className={styles["actions-section"]}>
-        <Button 
+        <Button
           variant="primary"
           permissionId="create-ticket"
           onClick={handleNewTicket}
         >
           Abrir Novo Chamado
         </Button>
-        
-        <Button 
+
+        <Button
           variant="outline"
           permissionId="view-all-tickets"
           onClick={handleViewAllTickets}
@@ -94,6 +95,7 @@ const Chamados: React.FC = () => {
           Ver Todos os Chamados
         </Button>
       </section>
+      
     </main>
   );
 };

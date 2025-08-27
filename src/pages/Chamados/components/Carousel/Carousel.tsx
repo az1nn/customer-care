@@ -1,16 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import styles from './Carousel.module.scss';
-
-// Definindo os tipos para os dados dos tickets
-export interface TicketData {
-  id: string;
-  title: string;
-  status: ('waiting' | 'in-progress' | 'delayed' | 'pending-client' | 'critical')[];
-  lastUpdate: string;
-  description?: string;
-}
+import { useModal } from '../../../../hooks/use-modal';
+import { ModalTicketDetails, type TicketData } from '../Modal';
 
 interface CarouselProps {
   tickets: TicketData[];
@@ -22,10 +15,10 @@ interface CarouselProps {
 // Função para obter as classes CSS baseadas no status
 const getStatusClasses = (status: TicketData['status']) => {
   const baseClasses = styles['carousel-ticket'];
-  
+
   // Usa o primeiro status para definir a classe principal do ticket
   const primaryStatus = status[0];
-  
+
   switch (primaryStatus) {
     case 'waiting':
       return `${baseClasses} ${styles['carousel-ticket--waiting']}`;
@@ -66,7 +59,17 @@ const Carousel: React.FC<CarouselProps> = ({
   spaceBetween = 24,
   className = ''
 }) => {
+  const ticketDetails = useModal();
   const swiperRef = useRef<any>(null);
+  const [selectedTicket, setSelectedTicket] = useState<TicketData | null>(null);
+
+  const handleTicketClick = (ticketId: string) => {
+    const ticket = tickets.find(t => t.id === ticketId);
+    if (ticket) {
+      setSelectedTicket(ticket);
+      ticketDetails.openModal();
+    }
+  };
 
   const handlePrevSlide = () => {
     if (swiperRef.current && !swiperRef.current.destroyed) {
@@ -93,7 +96,7 @@ const Carousel: React.FC<CarouselProps> = ({
           </button>
         </div>
       </div>
-      
+
       <Swiper
         modules={[Navigation]}
         spaceBetween={spaceBetween}
@@ -127,18 +130,18 @@ const Carousel: React.FC<CarouselProps> = ({
       >
         {tickets.map((ticket) => (
           <SwiperSlide key={ticket.id} className={styles['carousel-slide']}>
-            <div className={getStatusClasses(ticket.status)}>
+            <div className={getStatusClasses(ticket.status)} onClick={() => handleTicketClick(ticket.id)}>
               <div className={styles['carousel-ticket__header']}>
                 <h3 className={styles['carousel-ticket__id']}>Ticket {ticket.id}</h3>
               </div>
-              
+
               <div className={styles['carousel-ticket__content']}>
                 <h4 className={styles['carousel-ticket__title']}>{ticket.title}</h4>
               </div>
 
               <div className={styles['carousel-ticket__status-wrapper']}>
                 {ticket.status.map((statusType, index) => (
-                  <span 
+                  <span
                     key={index}
                     className={`${styles['carousel-ticket__status']} ${styles[`carousel-ticket__status--${statusType}`]}`}
                   >
@@ -146,7 +149,7 @@ const Carousel: React.FC<CarouselProps> = ({
                   </span>
                 ))}
               </div>
-              
+
               <div className={styles['carousel-ticket__footer']}>
                 <span className={styles['carousel-ticket__update']}>
                   Atualização: {ticket.lastUpdate}
@@ -156,6 +159,11 @@ const Carousel: React.FC<CarouselProps> = ({
           </SwiperSlide>
         ))}
       </Swiper>
+      <ModalTicketDetails
+        isOpen={ticketDetails.isOpen}
+        onClose={ticketDetails.closeModal}
+        ticket={selectedTicket}
+      />
     </div>
   );
 };
