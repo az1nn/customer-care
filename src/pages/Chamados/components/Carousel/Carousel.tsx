@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import styles from './Carousel.module.scss';
+import { Text } from 'light-portal-components';
 import { useModal } from '../../../../hooks/use-modal';
 import { ModalTicketDetails, type TicketData } from '../Modal';
 
@@ -85,8 +86,10 @@ const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <div className={`${styles['carousel-container']} ${className}`}>
-      <div className={styles['carousel-title']}>
-        <span>Últimas atualizações</span>
+      <div className={styles['carousel-title']}> 
+        <Text body lg>
+          Últimas atualizações
+        </Text>
         <div className={styles['navigation-arrows']}>
           <button onClick={handlePrevSlide} aria-label="Slide anterior">
             &#8249;

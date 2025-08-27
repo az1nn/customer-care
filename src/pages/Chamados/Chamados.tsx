@@ -1,9 +1,18 @@
 import { Button } from "light-portal-components";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Chamados.module.scss";
 import Carousel, { TicketData } from "@/pages/Chamados/components/Carousel";
+import Table from "@/pages/Chamados/components/Table/TableTicketsExample";
+import { IFormData } from "@/models/IFormData";
 
 const Chamados: React.FC = () => {
+
+  // Estado para o formulário
+  const [formData, setFormData] = useState<IFormData>({
+    text_field_1: '',
+    text_field_2: '',
+    search: ''
+  });
 
   // Dados de exemplo para os tickets do carousel (baseados na imagem)
   const ticketsData: TicketData[] = [
@@ -71,31 +80,20 @@ const Chamados: React.FC = () => {
     <main className={styles["main-page"]}>
 
 
-      <section className={styles["carousel-section"]}>
+
+      <section >
         <Carousel
           tickets={ticketsData}
           spaceBetween={24}
         />
+
       </section>
 
-      <section className={styles["actions-section"]}>
-        <Button
-          variant="primary"
-          permissionId="create-ticket"
-          onClick={handleNewTicket}
-        >
-          Abrir Novo Chamado
-        </Button>
-
-        <Button
-          variant="outline"
-          permissionId="view-all-tickets"
-          onClick={handleViewAllTickets}
-        >
-          Ver Todos os Chamados
-        </Button>
+      <section >
+        {/* Substitua pelos componente Form */}
+        <Table />
       </section>
-      
+
     </main>
   );
 };

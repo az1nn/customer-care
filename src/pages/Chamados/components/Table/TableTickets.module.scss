@@ -1,0 +1,201 @@
+// TableTickets.module.scss
+.table-tickets {
+  border-radius: 8px;
+  
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  &__title-section {
+    flex: 1;
+  }
+
+  &__title {
+    color: #333333;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  &__new-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &:focus {
+      outline: 2px solid #007bff;
+      outline-offset: 2px;
+    }
+  }
+
+  &__filter-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: transparent;
+    color: #666666;
+    border: 1px solid #d0d7de;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #f6f8fa;
+      border-color: #8b949e;
+    }
+
+    &:focus {
+      outline: 2px solid #007bff;
+      outline-offset: 2px;
+    }
+  }
+
+  &__search {
+    position: relative;
+  }
+
+  &__search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .mdn-Icon-buscar {
+      position: absolute;
+      left: 12px;
+      color: #8b949e;
+      z-index: 1;
+    }
+  }
+
+  &__search-input {
+    width: 250px;
+    padding: 8px 12px 8px 36px;
+    border: 1px solid #d0d7de;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #ffffff;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+      color: #8b949e;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  &__content {
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    overflow: hidden;
+  }
+
+  // Status styles
+  .status-pending {
+    color: #d97706;
+    background-color: #fef3c7;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    display: inline-block;
+  }
+
+  .status-in-progress {
+    color: #2563eb;
+    background-color: #dbeafe;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    display: inline-block;
+  }
+
+  .status-completed {
+    color: #059669;
+    background-color: #d1fae5;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    display: inline-block;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .table-tickets {
+
+    &__header {
+      gap: 12px;
+    }
+
+    &__actions {
+      gap: 8px;
+    }
+
+    &__search-input {
+      width: 200px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .table-tickets {
+    padding: 12px;
+
+    &__header {
+      margin-bottom: 16px;
+    }
+  }
+}
