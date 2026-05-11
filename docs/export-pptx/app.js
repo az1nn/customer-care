@@ -3,6 +3,7 @@ const statusElement = document.getElementById('status');
 const folderInfo = document.getElementById('folderInfo');
 const fileNameInput = document.getElementById('fileName');
 const exportSelectedButton = document.getElementById('exportSelected');
+// 18pt provides readable first-level bullets on a 16:9 slide with the chosen body font size.
 const BULLET_INDENT_POINTS = 18;
 
 let directoryHandle = null;
@@ -84,10 +85,17 @@ const safeFileName = () => {
 };
 
 document.getElementById('loadExample').addEventListener('click', async () => {
-  const response = await fetch('./slides.example.json');
-  const payload = await response.json();
-  slidesTextarea.value = JSON.stringify(payload, null, 2);
-  setStatus('Exemplo carregado.');
+  try {
+    const response = await fetch('./slides.example.json');
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const payload = await response.json();
+    slidesTextarea.value = JSON.stringify(payload, null, 2);
+    setStatus('Exemplo carregado.');
+  } catch (error) {
+    setStatus(`Falha ao carregar exemplo: ${error.message}`, true);
+  }
 });
 
 document.getElementById('downloadDefault').addEventListener('click', async () => {
@@ -141,11 +149,16 @@ document.getElementById('exportSelected').addEventListener('click', async () => 
 });
 
 fetch('./slides.example.json')
-  .then((response) => response.json())
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return response.json();
+  })
   .then((payload) => {
     slidesTextarea.value = JSON.stringify(payload, null, 2);
     setStatus('Exemplo padrão carregado. Clique em "Exportar (pasta padrão)".');
   })
-  .catch(() => {
-    setStatus('Não foi possível carregar o exemplo inicial.', true);
+  .catch((error) => {
+    setStatus(`Não foi possível carregar o exemplo inicial: ${error.message}`, true);
   });

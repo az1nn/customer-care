@@ -14,8 +14,15 @@ OUTPUT_FILE = OUTPUT_DIR / "desenvolvimento-assistido-por-ia-az1nn.pptx"
 
 
 def load_payload() -> dict:
-    with INPUT_FILE.open("r", encoding="utf-8") as file:
-        return json.load(file)
+    try:
+        with INPUT_FILE.open("r", encoding="utf-8") as file:
+            return json.load(file)
+    except FileNotFoundError as error:
+        raise RuntimeError(f"Arquivo de entrada não encontrado: {INPUT_FILE}") from error
+    except json.JSONDecodeError as error:
+        raise RuntimeError(f"JSON inválido em {INPUT_FILE}: {error}") from error
+    except OSError as error:
+        raise RuntimeError(f"Erro ao ler {INPUT_FILE}: {error}") from error
 
 
 def build_presentation(payload: dict) -> Presentation:
@@ -48,11 +55,14 @@ def build_presentation(payload: dict) -> Presentation:
 
 
 def main() -> None:
-    payload = load_payload()
-    presentation = build_presentation(payload)
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    presentation.save(OUTPUT_FILE)
-    print(f"Arquivo gerado: {OUTPUT_FILE}")
+    try:
+        payload = load_payload()
+        presentation = build_presentation(payload)
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        presentation.save(OUTPUT_FILE)
+        print(f"Arquivo gerado: {OUTPUT_FILE}")
+    except Exception as error:
+        raise SystemExit(f"Falha ao gerar apresentação: {error}") from error
 
 
 if __name__ == "__main__":
