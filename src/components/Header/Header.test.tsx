@@ -4,8 +4,8 @@ import { NavigationProps } from '../../stores/navigationStore';
 import { NavbarMenuProps } from './Navbar/Models/NavbarProps';
 import '@testing-library/jest-dom';
 
-// Mock dos componentes de mondrian-react
-jest.mock('mondrian-react', () => ({
+// Mock dos componentes de UI locais
+jest.mock('@/components/ui', () => ({
   Text: ({ children, ...props }: any) => (
     <div data-testid="text" {...props}>
       {children}

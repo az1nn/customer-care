@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.scss';
-import { Divider, Text } from 'mondrian-react';
+import { Divider, Text } from '@/components/ui';
 import { SidebarMenuProps } from './interfaces/SidebarProps';
 import { useNavigationStore } from '../../stores/navigationStore';
 

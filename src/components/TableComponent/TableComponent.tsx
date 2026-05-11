@@ -1,4 +1,4 @@
-import { Checkbox, Spinner, Text } from 'mondrian-react';
+import { Checkbox, Spinner, Text } from '@/components/ui';
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './TableComponent.module.scss';
 import { TableComponentProps } from './types/ITable';

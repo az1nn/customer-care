@@ -22,8 +22,7 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "mondrian-react": ["./src/components/mondrian-react-compat"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "docs"]
