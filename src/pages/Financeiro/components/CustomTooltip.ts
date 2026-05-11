@@ -123,7 +123,7 @@ export const verticalLinePlugin = {
       const ctx = chart.ctx;
       const activePoint = chart.tooltip._active[0];
       const x = activePoint.element.x;
-      const yAxis = chart.scales?.['y'];
+      const yAxis = chart.scales?.y;
 
       if (!yAxis) {
         return;
@@ -155,7 +155,7 @@ export const xAxisHoverPlugin = {
   afterDraw: (chart: PluginChart) => {
     if (chart.tooltip?._active && chart.tooltip._active.length) {
       const ctx = chart.ctx;
-      const xAxis = chart.scales?.['x'] as XAxisScale | undefined;
+      const xAxis = chart.scales?.x as XAxisScale | undefined;
 
       if (!xAxis || !xAxis.ticks || !xAxis.bottom || !xAxis.getPixelForTick) {
         return;
