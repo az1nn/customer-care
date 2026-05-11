@@ -35,6 +35,7 @@ type BreadcrumbItem = {
 };
 
 type AccordionItem = {
+  id?: string;
   title: ReactNode;
   content: ReactNode;
 };
@@ -100,7 +101,7 @@ export const Alert = ({ children, error, success }: AlertProps) => (
 export const Breadcrumb = ({ data }: { data: BreadcrumbItem[] }) => (
   <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
     {data.map((item, index) => (
-      <span key={`${item.url ?? item.page}-${index}`}>
+      <span key={`${item.page}-${item.url ?? "current"}`}>
         {index > 0 ? " / " : null}
         {item.url ? (
           <a className={styles.breadcrumbItem} href={item.url}>
@@ -120,11 +121,12 @@ export const Accordion = ({ data }: AccordionProps) => (
       <details
         className={styles.accordionItem}
         key={
-          typeof item.content === "string"
+          item.id ??
+          (typeof item.content === "string"
             ? item.content
             : typeof item.title === "string"
               ? item.title
-              : "accordion-item"
+              : "accordion-item")
         }
       >
         <summary className={styles.accordionSummary}>{item.title}</summary>
