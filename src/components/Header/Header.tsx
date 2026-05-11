@@ -1,3 +1,4 @@
+import React from "react";
 import { NavigationProps } from "../../stores/navigationStore";
 import "./Header.scss";
 import { Text, Breadcrumb } from "mondrian-react";
@@ -15,9 +16,6 @@ const Header: React.FC<HeaderProps> = ({ navigationProps, navbarConfig }) => {
   );
   const title = navigationProps.page;
   const { title: titleRemote, breadcrumb } = useMetadataHeader(navigationProps);
-
-  console.log(navigationProps, "navigationProps");
-  console.log(navbarConfig, "navbarConfig");
   return (
     <>
       <header>

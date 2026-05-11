@@ -1,24 +1,21 @@
 // No host, em algum componente ou hook
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useCallback, useEffect, useState, useMemo, useRef } from 'react';
-// import { LoadableMfesConstant } from '../constants/LoadableMfesConstants';
-import { RoutesConfig } from './RoutesConfig';
+import { useEffect, useState, useMemo } from 'react';
 import { SidebarConfigs } from '../configs/SidebarConfigs';
 import {
-  updateBreadcrumbWithModules,
-  findLastBreadcrumbItemWithChildren,
-  findModuleByLocation,
   findTitleFromSidebar,
   findTitleFromSidebarByBreadcrumb,
 } from '../components/Header/utils';
+import { NavigationProps } from '../stores/navigationStore';
 
 export type RouteConfig = {
   path: string;
-  component?: React.ComponentType<any>;
+  component?: React.ComponentType<Record<string, unknown>>;
   children?: RouteConfig[];
   label?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 /*
@@ -91,7 +88,7 @@ export type RouteConfig = {
   It uses SidebarConfigs for title determination and route modules for breadcrumb functionality.
   It is used in the Header component.
 */
-export const useMetadataHeader = (navigationProps: any) => {
+export const useMetadataHeader = (navigationProps: NavigationProps) => {
   // const modules = useRemoteRouteModulesImports();
   const location = useLocation();
   const [title, setTitle] = useState(navigationProps.page);

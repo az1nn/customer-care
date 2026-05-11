@@ -1,4 +1,36 @@
-export function CustomTooltip(context: any) {
+import type { Chart } from 'chart.js';
+
+type TooltipChartData = {
+  labels: unknown[];
+  datasets: { backgroundColor: string[] }[];
+};
+
+type TooltipDataPoint = {
+  formattedValue: string;
+  dataIndex: number;
+};
+
+type TooltipModel = {
+  opacity: number;
+  body?: unknown[];
+  dataPoints: TooltipDataPoint[];
+  caretX: number;
+  caretY: number;
+  chart: { data: TooltipChartData };
+};
+
+type ExternalTooltipContext = {
+  chart: Chart;
+  tooltip: TooltipModel;
+};
+
+type ActiveElement = { element: { x: number }; index: number };
+
+type PluginChart = Chart & {
+  tooltip?: { _active?: ActiveElement[] };
+};
+
+export function CustomTooltip(context: ExternalTooltipContext) {
   let tooltipEl = document.getElementById("custom-tooltip");
   if (!tooltipEl) {
     tooltipEl = document.createElement("div");
@@ -37,7 +69,7 @@ export function CustomTooltip(context: any) {
     position.top + window.pageYOffset + tooltipModel.caretY - 110 + "px";
 }
 
-export function CustomDoughnutTooltip(context: any) {
+export function CustomDoughnutTooltip(context: ExternalTooltipContext) {
   let tooltipEl = document.getElementById("doughnut-custom-tooltip");
   if (!tooltipEl) {
     tooltipEl = document.createElement("div");
@@ -56,7 +88,7 @@ export function CustomDoughnutTooltip(context: any) {
 
   if (tooltipModel.body) {
     const dataIndex = tooltipModel.dataPoints[0].dataIndex;
-    const label = tooltipModel.chart.data.labels[dataIndex];
+    const label = tooltipModel.chart.data.labels[dataIndex] as string;
     const value = tooltipModel.dataPoints[0].formattedValue;
     const backgroundColor =
       tooltipModel.chart.data.datasets[0].backgroundColor[dataIndex];
@@ -86,15 +118,14 @@ export function CustomDoughnutTooltip(context: any) {
 
 export const verticalLinePlugin = {
   id: "verticalLinePlugin",
-  afterDraw: (chart: any) => {
+  afterDraw: (chart: PluginChart) => {
     if (chart.tooltip?._active && chart.tooltip._active.length) {
       const ctx = chart.ctx;
       const activePoint = chart.tooltip._active[0];
       const x = activePoint.element.x;
       const yAxis = chart.scales?.y;
 
-      // Check if yAxis exists and has the required properties
-      if (!yAxis || !yAxis.top === undefined || !yAxis.bottom === undefined) {
+      if (!yAxis) {
         return;
       }
 
@@ -112,27 +143,30 @@ export const verticalLinePlugin = {
   },
 };
 
+type XAxisScale = {
+  ticks: { label: string }[];
+  bottom: number;
+  ctx: { font: string };
+  getPixelForTick: (index: number) => number;
+};
+
 export const xAxisHoverPlugin = {
   id: "xAxisHoverPlugin",
-  afterDraw: (chart: any) => {
+  afterDraw: (chart: PluginChart) => {
     if (chart.tooltip?._active && chart.tooltip._active.length) {
       const ctx = chart.ctx;
-      const xAxis = chart.scales?.x;
+      const xAxis = chart.scales?.x as XAxisScale | undefined;
 
-      // Check if xAxis exists and has the required properties
       if (!xAxis || !xAxis.ticks || !xAxis.bottom || !xAxis.getPixelForTick) {
         return;
       }
 
-      // Get the index of the hovered data point
       const index = chart.tooltip._active[0].index;
 
-      // Change color of the corresponding x-axis tick
       if (xAxis.ticks[index]) {
         ctx.save();
         ctx.fillStyle = "#DA291C";
         ctx.font = xAxis.ctx.font;
-        ctx.fontWeight = "bolder";
         ctx.textAlign = "center";
         const tick = xAxis.ticks[index];
         ctx.fillText(

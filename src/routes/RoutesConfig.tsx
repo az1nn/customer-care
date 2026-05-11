@@ -16,7 +16,7 @@ export const RoutesConfig = [
     label: "Cadastrar",
   },
   {
-    path: APP_ROUTES_CONSTANTS.Financeiro,
+    path: APP_ROUTES_CONSTANTS.FINANCEIRO,
     element: <Financeiro />,
     label: "Financeiro",
   },
