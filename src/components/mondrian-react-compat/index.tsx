@@ -100,7 +100,7 @@ export const Alert = ({ children, error, success }: AlertProps) => (
 export const Breadcrumb = ({ data }: { data: BreadcrumbItem[] }) => (
   <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
     {data.map((item, index) => (
-      <span key={item.url ?? item.page}>
+      <span key={`${item.url ?? item.page}-${index}`}>
         {index > 0 ? " / " : null}
         {item.url ? (
           <a className={styles.breadcrumbItem} href={item.url}>
@@ -136,9 +136,7 @@ export const Accordion = ({ data }: AccordionProps) => (
 
 export const Spinner = ({ isLoading }: SpinnerProps) =>
   isLoading ? (
-    <span aria-label="Carregando" className={styles.spinner} role="status">
-      Loading...
-    </span>
+    <span aria-label="Carregando" className={styles.spinner} role="status" />
   ) : null;
 
 export const Checkbox = (props: CheckboxProps) => <input type="checkbox" {...props} />;
