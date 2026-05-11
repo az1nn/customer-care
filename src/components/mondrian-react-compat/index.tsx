@@ -100,7 +100,7 @@ export const Alert = ({ children, error, success }: AlertProps) => (
 export const Breadcrumb = ({ data }: { data: BreadcrumbItem[] }) => (
   <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
     {data.map((item, index) => (
-      <span key={`${item.page}-${index}`}>
+      <span key={item.url ?? item.page}>
         {index > 0 ? " / " : null}
         {item.url ? (
           <a className={styles.breadcrumbItem} href={item.url}>
@@ -116,8 +116,17 @@ export const Breadcrumb = ({ data }: { data: BreadcrumbItem[] }) => (
 
 export const Accordion = ({ data }: AccordionProps) => (
   <div className={styles.accordion}>
-    {data.map((item, index) => (
-      <details className={styles.accordionItem} key={index}>
+    {data.map((item) => (
+      <details
+        className={styles.accordionItem}
+        key={
+          typeof item.content === "string"
+            ? item.content
+            : typeof item.title === "string"
+              ? item.title
+              : "accordion-item"
+        }
+      >
         <summary className={styles.accordionSummary}>{item.title}</summary>
         <div className={styles.accordionContent}>{item.content}</div>
       </details>
