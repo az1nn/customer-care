@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navbar.scss'; // Importando o arquivo .scss
 import { useNavigationStore } from '../../../stores/navigationStore';
-import { Text } from 'mondrian-react';
+import { Text } from '@/components/ui';
 import { NavbarMenuProps } from './Models/NavbarProps';
 
 interface NavbarProps {

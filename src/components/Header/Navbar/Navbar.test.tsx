@@ -14,8 +14,8 @@ jest.mock('../../../stores/navigationStore', () => {
   };
 });
 
-// Mock para o Text componente
-jest.mock('mondrian-react', () => ({
+// Mock para o componente Text local
+jest.mock('@/components/ui', () => ({
   Text: ({ children, ...props }: any) => (
     <div data-testid="text" {...props}>
       {children}

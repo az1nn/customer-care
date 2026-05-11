@@ -1,4 +1,4 @@
-import { Alert, Text } from 'mondrian-react';
+import { Alert, Text } from '@/components/ui';
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './AlertMessage.module.scss';

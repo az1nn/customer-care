@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationProps } from "../../stores/navigationStore";
 import "./Header.scss";
-import { Text, Breadcrumb } from "mondrian-react";
+import { Text, Breadcrumb } from "@/components/ui";
 import Navbar from "./Navbar/Navbar";
 import { NavbarMenuProps } from "./Navbar/Models/NavbarProps";
 import { useMetadataHeader } from "../../routes/useMetadataHeader";

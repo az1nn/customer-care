@@ -1,4 +1,4 @@
-import { Text } from 'mondrian-react';
+import { Text } from '@/components/ui';
 import React from 'react';
 import styles from './ErrorScreen.module.scss';
 

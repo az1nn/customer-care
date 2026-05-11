@@ -22,6 +22,5 @@ module.exports = {
   coverageReporters: ['text', 'lcov'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^mondrian-react$': '<rootDir>/src/components/mondrian-react-compat',
   },
 };

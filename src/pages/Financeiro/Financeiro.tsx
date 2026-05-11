@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Financeiro.module.scss";
-import { Accordion, Subtitle, Text } from "mondrian-react";
+import { Accordion, Subtitle, Text } from "@/components/ui";
 import {
   ArcElement,
   CategoryScale,

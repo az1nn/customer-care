@@ -1,6 +1,6 @@
 import React from "react";
 import { IFormData } from "@/models/IFormData";
-import { Input as InputMondrian } from "mondrian-react";
+import { Input as InputMondrian } from "@/components/ui";
 import styles from "./Form.module.scss";
 import { AccessControl, Input, Text } from "@/components/light-portal-compat";
 

@@ -3,7 +3,7 @@ import type {
   PropsWithChildren,
   ReactNode,
 } from "react";
-import styles from "./MondrianReactCompat.module.scss";
+import styles from "./Ui.module.scss";
 import { Input as BaseInput } from "@/components/light-portal-compat";
 
 type TextProps = PropsWithChildren<{

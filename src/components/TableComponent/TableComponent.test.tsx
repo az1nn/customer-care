@@ -4,7 +4,7 @@ import TableComponent from './TableComponent';
 import { TableComponentProps } from './types/ITable';
 import '@testing-library/jest-dom';
 
-jest.mock('mondrian-react', () => ({
+jest.mock('@/components/ui', () => ({
   Spinner: ({ isLoading }: { isLoading: boolean }) =>
     isLoading ? <div data-testid="spinner">Spinner</div> : null,
   Text: ({ children }: { children: React.ReactNode }) => (
