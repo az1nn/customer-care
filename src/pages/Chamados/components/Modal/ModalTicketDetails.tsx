@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal } from 'light-portal-components';
+import { Modal } from '@/components/light-portal-compat';
 import styles from './ModalTicketDetails.module.scss';
 
 // Definindo os tipos para os dados dos tickets

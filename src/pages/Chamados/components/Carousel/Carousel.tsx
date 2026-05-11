@@ -2,9 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import styles from './Carousel.module.scss';
-import { Text } from 'light-portal-components';
 import { useModal } from '../../../../hooks/use-modal';
 import { ModalTicketDetails, type TicketData } from '../Modal';
+import { Text } from '@/components/light-portal-compat';
 
 interface CarouselProps {
   tickets: TicketData[];

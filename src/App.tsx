@@ -1,7 +1,6 @@
 import styles from "./App.module.scss";
 import React, { useEffect } from "react";
 import RoutesComponent from "./routes/RoutesComponent";
-import { AlertProvider } from "light-portal-components";
 import Sidebar from "./components/Sidebar/Sidebar";
 import mainLogo from "./assets/claro-empresas.svg";
 import { SidebarConfigs } from "./configs/SidebarConfigs";
@@ -9,6 +8,7 @@ import Header from "./components/Header/Header";
 import { useNavigationStore } from "./stores/navigationStore";
 import { navbarConfig } from "./configs/NavbarConfigs";
 import { useLocation } from "react-router-dom";
+import { AlertProvider } from "@/components/light-portal-compat";
 
 const App: React.FC = () => {
   const { navigationProps, updateNavigation } = useNavigationStore();
