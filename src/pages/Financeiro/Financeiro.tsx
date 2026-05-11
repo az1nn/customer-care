@@ -142,6 +142,7 @@ const Financeiro: React.FC = () => {
         <Accordion
           data={accordionData.map((item) => {
             return {
+              id: item.label,
               content: `
                   Detalhes sobre ${item.label}: informações relevantes sobre esta
                   categoria de serviço.`,

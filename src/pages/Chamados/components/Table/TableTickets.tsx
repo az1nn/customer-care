@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Text } from 'light-portal-components';
 import TableComponent from '@/components/TableComponent/TableComponent';
 import { Column, DataRow } from '@/components/TableComponent/types/ITable';
 import styles from './TableTickets.module.scss';
+import { Button, Text } from '@/components/light-portal-compat';
 
 // Interface para os dados do ticket
 export interface TicketData {
