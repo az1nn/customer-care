@@ -3,6 +3,7 @@ const statusElement = document.getElementById('status');
 const folderInfo = document.getElementById('folderInfo');
 const fileNameInput = document.getElementById('fileName');
 const exportSelectedButton = document.getElementById('exportSelected');
+const BULLET_INDENT_SIZE = 18;
 
 let directoryHandle = null;
 
@@ -51,7 +52,10 @@ const createPresentation = (payload) => {
       color: '0F172A',
     });
 
-    const bullets = (slideData.bullets || []).map((text) => ({ text, options: { bullet: { indent: 18 } } }));
+    const bullets = (slideData.bullets || []).map((text) => ({
+      text,
+      options: { bullet: { indent: BULLET_INDENT_SIZE } },
+    }));
     slide.addText(bullets, {
       x: 0.9,
       y: 1.5,

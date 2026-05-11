@@ -51,7 +51,7 @@ def main() -> None:
     payload = load_payload()
     presentation = build_presentation(payload)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    presentation.save(OUTPUT_FILE.as_posix())
+    presentation.save(OUTPUT_FILE)
     print(f"Arquivo gerado: {OUTPUT_FILE}")
 
 
