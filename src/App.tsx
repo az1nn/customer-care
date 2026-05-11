@@ -16,11 +16,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     updateNavigation();
-  }, [location]);
+  }, [location, updateNavigation]);
 
   return (
     <AlertProvider>
-      <main className={styles.App} data-location={location.pathname}>
+      <div className={styles.App} data-location={location.pathname}>
         <Sidebar menuItems={SidebarConfigs} logoUrl={mainLogo} />
         <main className={styles.content}>
           <Header
@@ -29,7 +29,7 @@ const App: React.FC = () => {
           />
           <RoutesComponent />
         </main>
-      </main>
+      </div>
     </AlertProvider>
   );
 };

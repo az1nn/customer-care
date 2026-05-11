@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigation } from "../../hooks/use-navigation.ts";
 import styles from "./Financeiro.module.scss";
 import { Accordion, Subtitle, Text } from "mondrian-react";
 import {

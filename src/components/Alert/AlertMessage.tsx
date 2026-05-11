@@ -22,18 +22,24 @@ const AlertMessage: React.FC<AlertMessageProps> = ({
     isVisible ? 'showing' : 'hidden'
   );
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearCurrentTimer = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
+    if (hideTimerRef.current) {
+      clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = null;
+    }
   };
 
   const hideAlert = () => {
     setVisibility('hiding');
 
-    setTimeout(() => {
+    hideTimerRef.current = setTimeout(() => {
+      hideTimerRef.current = null;
       setVisibility('hidden');
       if (onClose) onClose();
     }, 500);

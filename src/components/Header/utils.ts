@@ -8,7 +8,7 @@ type GenericItem = {
   children?: GenericItem[];
   label?: string;
   page?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 /*
@@ -327,8 +327,10 @@ const findModuleByPartialPath = (
   This item will be used as the title.
   Items with dynamic parameters are excluded from being used as titles.
 */
+type BreadcrumbItem = { url?: string; page?: string; [key: string]: unknown };
+
 export const findLastBreadcrumbItemWithChildren = (
-  breadcrumbItems: any[],
+  breadcrumbItems: BreadcrumbItem[],
   modules: RouteConfig[]
 ): string | null => {
   // Iterate through breadcrumb items from last to first
@@ -359,10 +361,10 @@ export const findLastBreadcrumbItemWithChildren = (
   If a module has dynamic parameters (like ":id"), the breadcrumb will also stop at that point.
 */
 export const updateBreadcrumbWithModules = (
-  breadcrumbItems: any[],
+  breadcrumbItems: BreadcrumbItem[],
   modules: RouteConfig[]
 ) => {
-  const updatedBreadcrumb: any[] = [];
+  const updatedBreadcrumb: BreadcrumbItem[] = [];
 
   for (let i = 0; i < breadcrumbItems.length; i++) {
     const item = breadcrumbItems[i];
@@ -483,7 +485,7 @@ export const findTitleFromSidebar = (
   This function looks through breadcrumb items to find a matching sidebar item
 */
 export const findTitleFromSidebarByBreadcrumb = (
-  breadcrumbItems: any[],
+  breadcrumbItems: BreadcrumbItem[],
   sidebarItems: SidebarMenuProps[]
 ): string | null => {
   // Iterate through breadcrumb items from last to first to find the most specific match

@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navbar.scss'; // Importando o arquivo .scss
 import { useNavigationStore } from '../../../stores/navigationStore';

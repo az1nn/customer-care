@@ -103,7 +103,7 @@ const Carousel: React.FC<CarouselProps> = ({
       <Swiper
         modules={[Navigation]}
         spaceBetween={spaceBetween}
-        slidesPerView="auto"
+        slidesPerView={slidesPerView}
         freeMode={true}
         grabCursor={true}
         onSwiper={(swiper) => {
