@@ -1,0 +1,70 @@
+{
+  "title": "Desenvolvimento Assistido por IA: A Era do Spec-Driven Development (SDD).",
+  "subtitle": "Do \"Vibe Coding\" à Engenharia de Software com Agentes.",
+  "slides": [
+    {
+      "title": "O Fim do \"Vibe Coding\"",
+      "bullets": [
+        "Problema: Prompts vagos levam à \"amnésia da IA\" e alucinações.",
+        "Consequência: Código funcional, mas desalinhado com os requisitos do sistema.",
+        "Solução: Tratar a especificação como a \"fonte da verdade\" e o código como um subproduto."
+      ]
+    },
+    {
+      "title": "O Que é Spec-Driven Development (SDD)?",
+      "bullets": [
+        "Conceito: Inverter o fluxo tradicional: primeiro o contrato, depois a implementação.",
+        "Níveis de Rigor: Spec-First.",
+        "Níveis de Rigor: Spec-Anchored.",
+        "Níveis de Rigor: Spec-as-Source."
+      ]
+    },
+    {
+      "title": "Fluxo de Trabalho RPI (Research, Plan, Implement)",
+      "bullets": [
+        "Research: Agentes pesquisam a base de código e requisitos.",
+        "Plan: Criação de artefatos estruturados (spec.md e plan.md).",
+        "Implement: Implementação atômica via tasks.md para evitar alucinações."
+      ]
+    },
+    {
+      "title": "A \"Constituição\" do Projeto",
+      "bullets": [
+        "Definição: Contrato imutável de princípios de segurança e arquitetura.",
+        "Benefícios: Redução de até 73% em defeitos de segurança (CWE/MITRE).",
+        "Exemplo: Regras obrigatórias (MUST) para tratamento de dados sensíveis."
+      ]
+    },
+    {
+      "title": "O Coração do Plano: plan.md e Contratos",
+      "bullets": [
+        "Arquitetura: Definição da stack (Next.js/Vite) e padrões de pastas.",
+        "Contratos de API: Uso de TypeScript/Zod para definir inputs e outputs inequívocos.",
+        "Padrão: Elimina o \"integration hell\" entre Front-end e Back-end."
+      ]
+    },
+    {
+      "title": "Validação e Testes no SDD",
+      "bullets": [
+        "BDD/Gherkin: Escrever cenários (Dado/Quando/Então) como \"super-prompts\".",
+        "Manutenção: Integração em CI/CD; se o código diverge da especificação, o build falha.",
+        "Regeneração: Se a lógica muda, altera-se a spec e regenera-se o código."
+      ]
+    },
+    {
+      "title": "Ferramentas Recomendadas (2026)",
+      "bullets": [
+        "IDEs: AWS Kiro e Cursor (Plan Mode).",
+        "Toolkits: GitHub Spec Kit (CLI robusto).",
+        "Orquestradores: BMAD-METHOD e OpenCode (AGENTS.md)."
+      ]
+    },
+    {
+      "title": "Conclusão e Próximos Passos",
+      "bullets": [
+        "O desenvolvedor deixa de ser um \"escritor de código\" para ser um orquestrador de intenções.",
+        "Qualidade da especificação = Qualidade do software final."
+      ]
+    }
+  ]
+}
